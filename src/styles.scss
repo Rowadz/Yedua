@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './theme.scss';
+@import '~magic.css/dist/magic.css';
+@import '~bootstrap-4-grid/css/grid.css';
+
+html,
+body {
+  height: 100%;
+  background-color: #3b3b40;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.shadow {
+  box-shadow: 0 0 20px white;
+}
