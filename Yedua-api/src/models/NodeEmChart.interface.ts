@@ -4,3 +4,5 @@ export interface NodeEmChart {
   value: number;
   children?: NodeEmChart[];
 }
+
+export type Lvl = '1' | '2' | '∞';

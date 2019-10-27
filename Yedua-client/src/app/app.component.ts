@@ -4,6 +4,7 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 import dark from '@amcharts/amcharts4/themes/dark';
+import { Lvl } from './models';
 am4core.useTheme(dark);
 
 @Component({
@@ -13,14 +14,19 @@ am4core.useTheme(dark);
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   chart: am4charts.Chart;
+  private lvl: Lvl;
 
   constructor(
     private readonly messenger: MessengerService,
     private readonly zone: NgZone
   ) {}
 
+  changeLvl(lvl: Lvl) {
+    this.lvl = lvl;
+  }
+
   test(): void {
-    this.messenger.jeepData().subscribe({
+    this.messenger.jeepData('', this.lvl).subscribe({
       next: data => {
         const chart = am4core.create(
           'chartdiv',

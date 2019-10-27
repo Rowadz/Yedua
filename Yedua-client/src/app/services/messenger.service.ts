@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { Lvl } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class MessengerService {
     this.endpoint = `${apiUrl}/${apiPrefix}`;
   }
 
-  jeepData(url: string): Observable<any> {
+  jeepData(url: string, lvl: Lvl): Observable<any> {
     url = encodeURIComponent('https://www.npmjs.com/package/psl');
-    return this.http.get(`${this.endpoint}/this/${url}`);
+    return this.http.get(`${this.endpoint}/this/${url}/${lvl}`);
   }
 }
