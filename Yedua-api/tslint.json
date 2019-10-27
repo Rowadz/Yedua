@@ -3,12 +3,11 @@
   "rules": {
     "member-ordering": false,
     "object-literal-sort-keys": false,
+    "trailing-comma": false,
     "ordered-imports": false,
     "quotemark": [true, "single"]
   },
   "linterOptions": {
-    "exclude": [
-      "./node_modules/**"
-    ]
+    "exclude": ["./node_modules/**"]
   }
 }
