@@ -15,18 +15,25 @@ am4core.useTheme(dark);
 export class AppComponent implements AfterViewInit, OnDestroy {
   chart: am4charts.Chart;
   private lvl: Lvl;
+  private url: string;
 
   constructor(
     private readonly messenger: MessengerService,
     private readonly zone: NgZone
-  ) {}
+  ) {
+    this.lvl = '1';
+  }
 
   changeLvl(lvl: Lvl) {
     this.lvl = lvl;
   }
 
+  changeUrl(websiteLink: string) {
+    this.url = websiteLink;
+  }
+
   test(): void {
-    this.messenger.jeepData('', this.lvl).subscribe({
+    this.messenger.jeepData(this.url, this.lvl).subscribe({
       next: data => {
         const chart = am4core.create(
           'chartdiv',
@@ -57,10 +64,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       new am4plugins_forceDirected.ForceDirectedSeries()
     );
     this.chart.data = [...data];
+    (this.chart as any).cursor = new am4charts.XYCursor();
+    (this.chart as any).cursor.behavior = 'zoomY';
+    (this.chart as any).cursor.lineX.disabled = true;
+
     networkSeries.dataFields.value = 'value';
     networkSeries.dataFields.name = 'name';
     networkSeries.dataFields.children = 'children';
-    networkSeries.nodes.template.tooltipText = '{name}:{value}';
+    networkSeries.nodes.template.tooltipText = '{name}: children = {value}';
     networkSeries.nodes.template.fillOpacity = 1;
     networkSeries.manyBodyStrength = -20;
     networkSeries.links.template.strength = 0.8;

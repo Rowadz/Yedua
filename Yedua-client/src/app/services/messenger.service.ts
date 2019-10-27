@@ -16,7 +16,8 @@ export class MessengerService {
   }
 
   jeepData(url: string, lvl: Lvl): Observable<any> {
-    url = encodeURIComponent('https://www.npmjs.com/package/psl');
-    return this.http.get(`${this.endpoint}/this/${url}/${lvl}`);
+    return this.http.get(
+      `${this.endpoint}/this/${encodeURIComponent(url)}/${lvl}`
+    );
   }
 }
