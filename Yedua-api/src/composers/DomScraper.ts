@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { NodeEmChart } from '../models/';
 
 export class DomScraper {
   private readonly $: CheerioStatic;
@@ -23,12 +24,17 @@ export class DomScraper {
       .toArray();
   }
 
-  private getChildData(
-    ce: CheerioElement[]
-  ): Array<{ name: string; value: number }> {
-    return ce.map((el: CheerioElement) => ({
-      name: this.$(el).prop('tagName'),
-      value: this.$(el).children().length
-    }));
+  private getChildData(ce: CheerioElement[]): NodeEmChart[] {
+    return ce.map((el: CheerioElement) => {
+      const len: number = this.$(el).children().length;
+      const nodeInfo: NodeEmChart = {
+        name: this.$(el).prop('tagName'),
+        value: len
+      };
+      if (len >= 1) {
+        nodeInfo.children = [...this.getChildData(this.childrenArr(el))];
+      }
+      return nodeInfo;
+    });
   }
 }
