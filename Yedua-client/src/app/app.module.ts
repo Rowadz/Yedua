@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatModule } from './mat/mat.module';
 import { UIModule } from './ui/ui.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatModule,
     UIModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxEchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

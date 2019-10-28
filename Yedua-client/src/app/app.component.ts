@@ -7,6 +7,9 @@ import dark from '@amcharts/amcharts4/themes/amchartsdark';
 // material, amchartsdark, dark => good themes
 // kelly, moonrisekingdom => nice themes
 import { Lvl } from './models';
+import { TREE_OPTION } from './helpers/echart.helper';
+import { EChartOption } from 'echarts';
+import { DeepPartial } from 'utility-types';
 
 @Component({
   selector: 'yedua-root',
@@ -17,7 +20,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   chart: am4charts.Chart;
   private lvl: Lvl;
   private url: string;
-
+  mergeData: object;
+  options: DeepPartial<EChartOption>;
   constructor(
     private readonly messenger: MessengerService,
     private readonly zone: NgZone
@@ -37,11 +41,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.messenger.jeepData(this.url, this.lvl).subscribe({
       next: data => {
         am4core.useTheme(dark);
-        const chart = am4core.create(
-          'chartdiv',
-          am4plugins_forceDirected.ForceDirectedTree
-        );
-        this.chart = chart;
+        (TREE_OPTION.series[0] as any).data = data;
+        this.mergeData = {
+          series: TREE_OPTION.series
+        };
+
+        this.options = TREE_OPTION;
+        // const chart = am4core.create(
+        //   'chartdiv',
+        //   am4plugins_forceDirected.ForceDirectedTree
+        // );
+        // this.chart = chart;
         this.dataMapper(data);
         // svgPanZoom('#chartdiv svg');
       },
