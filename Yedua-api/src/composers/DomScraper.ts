@@ -13,6 +13,7 @@ export class DomScraper {
     return mainParents.map((name: string) => {
       return {
         name,
+        value: this.childrenArr(name).length,
         children: this.getChildData(this.childrenArr(name), lvl)
       };
     });

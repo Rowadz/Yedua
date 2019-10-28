@@ -26,13 +26,12 @@ router.get('/this/:url/:lvl', async (req: Request, res: Response) => {
       throw new Error('Please provide a valid url');
     }
 
-    console.log(lvl, url, isUrl(url));
-
     const $: CheerioStatic = load(await get(url));
     const domScraper = new DomScraper($);
     const data = [
       {
         name: extractDomain(url),
+        value: 2,
         children: domScraper.init(lvl as Lvl)
       }
     ];

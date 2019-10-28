@@ -3,9 +3,10 @@ import { MessengerService } from './services/messenger.service';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
-import dark from '@amcharts/amcharts4/themes/dark';
+import dark from '@amcharts/amcharts4/themes/amchartsdark';
+// material, amchartsdark, dark => good themes
+// kelly, moonrisekingdom => nice themes
 import { Lvl } from './models';
-am4core.useTheme(dark);
 
 @Component({
   selector: 'yedua-root',
@@ -35,13 +36,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   test(): void {
     this.messenger.jeepData(this.url, this.lvl).subscribe({
       next: data => {
+        am4core.useTheme(dark);
         const chart = am4core.create(
           'chartdiv',
           am4plugins_forceDirected.ForceDirectedTree
         );
-
         this.chart = chart;
         this.dataMapper(data);
+        // svgPanZoom('#chartdiv svg');
       },
       error: console.error
     });
