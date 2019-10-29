@@ -1,0 +1,22 @@
+<section class="row white-text w-100">
+  <mat-radio-group
+    aria-label="Select a level"
+    class="w-100"
+    (change)="onChange($event)"
+  >
+    <div class="col-xs-3 col-md-12 col-sm-3 m-1">
+      <mat-radio-button value="force-tree" color="accent" [checked]="true">
+        <span>
+          Force tree
+        </span>
+      </mat-radio-button>
+    </div>
+    <div class="col-xs-3 col-md-12 col-sm-3 m-1">
+      <mat-radio-button value="tree" color="accent">
+        <span>
+          Tree
+        </span>
+      </mat-radio-button>
+    </div>
+  </mat-radio-group>
+</section>

@@ -6,10 +6,11 @@ import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDire
 import dark from '@amcharts/amcharts4/themes/amchartsdark';
 // material, amchartsdark, dark => good themes
 // kelly, moonrisekingdom => nice themes
-import { Lvl } from './models';
+import { Lvl, Shape } from './models';
 import { TREE_OPTION } from './helpers/echart.helper';
 import { EChartOption } from 'echarts';
 import { DeepPartial } from 'utility-types';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'yedua-root',
@@ -20,42 +21,69 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   chart: am4charts.Chart;
   private lvl: Lvl;
   private url: string;
+  private shape: Shape;
+  loading: boolean;
+  hideForceTree: boolean;
   mergeData: object;
   options: DeepPartial<EChartOption>;
+
   constructor(
     private readonly messenger: MessengerService,
     private readonly zone: NgZone
   ) {
     this.lvl = '1';
+    this.hideForceTree = false;
+    this.loading = false;
   }
 
-  changeLvl(lvl: Lvl) {
+  changeLvl(lvl: Lvl): void {
     this.lvl = lvl;
   }
 
-  changeUrl(websiteLink: string) {
+  changeUrl(websiteLink: string): void {
     this.url = websiteLink;
   }
 
+  changeShape(s: Shape): void {
+    this.shape = s;
+  }
+
   test(): void {
+    this.loading = true;
     this.messenger.jeepData(this.url, this.lvl).subscribe({
       next: data => {
-        am4core.useTheme(dark);
-        (TREE_OPTION.series[0] as any).data = data;
-        this.mergeData = {
-          series: TREE_OPTION.series
-        };
-
-        this.options = TREE_OPTION;
-        // const chart = am4core.create(
-        //   'chartdiv',
-        //   am4plugins_forceDirected.ForceDirectedTree
-        // );
-        // this.chart = chart;
-        this.dataMapper(data);
-        // svgPanZoom('#chartdiv svg');
+        if (this.shape === 'tree') {
+          this.hideForceTree = true;
+          (TREE_OPTION.series[0] as any).data = data;
+          this.mergeData = {
+            series: TREE_OPTION.series
+          };
+          this.options = TREE_OPTION;
+          if (this.chart) {
+            this.chart.dispose();
+          }
+          this.loading = false;
+        } else {
+          if (this.chart) {
+            this.chart.dispose();
+          }
+          this.hideForceTree = false;
+          setTimeout(() => {
+            this.mergeData = null;
+            am4core.useTheme(dark);
+            const chart = am4core.create(
+              'chartdiv',
+              am4plugins_forceDirected.ForceDirectedTree
+            );
+            this.chart = chart;
+            this.dataMapper(data);
+            this.loading = false;
+          }, 0);
+        }
       },
-      error: console.error
+      error: (e: HttpErrorResponse) => {
+        this.loading = false;
+      }
     });
   }
 
