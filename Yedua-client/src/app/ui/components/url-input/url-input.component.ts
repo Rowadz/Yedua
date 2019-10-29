@@ -2,7 +2,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from '@angular/core';
 
 @Component({
@@ -11,11 +12,15 @@ import {
   styleUrls: ['./url-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UrlInputComponent {
+export class UrlInputComponent implements OnInit {
   @Output() urlChanged: EventEmitter<string>;
 
   constructor() {
     this.urlChanged = new EventEmitter<string>();
+  }
+
+  ngOnInit(): void {
+    this.urlChanged.emit('https://www.infinitysymbol.net');
   }
 
   onChange(shouldBeWebsiteUrl: string): void {
