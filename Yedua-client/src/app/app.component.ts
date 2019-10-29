@@ -11,6 +11,7 @@ import { TREE_OPTION } from './helpers/echart.helper';
 import { EChartOption } from 'echarts';
 import { DeepPartial } from 'utility-types';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'yedua-root',
@@ -29,7 +30,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private readonly messenger: MessengerService,
-    private readonly zone: NgZone
+    private readonly zone: NgZone,
+    private readonly snak: MatSnackBar
   ) {
     this.lvl = '1';
     this.hideForceTree = false;
@@ -81,7 +83,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           }, 0);
         }
       },
-      error: (e: HttpErrorResponse) => {
+      error: ({ error: { error } }: HttpErrorResponse) => {
+        this.snak.open(error || 'Oops', 'Dismiss');
         this.loading = false;
       }
     });

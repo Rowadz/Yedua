@@ -16,6 +16,9 @@ export class MessengerService {
   }
 
   jeepData(url: string, lvl: Lvl): Observable<any> {
+    if (url === '') {
+      url = undefined;
+    }
     return this.http.get(
       `${this.endpoint}/this/${encodeURIComponent(url)}/${lvl}`
     );
