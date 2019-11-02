@@ -56,7 +56,8 @@ export const TREE_OPTION: DeepPartial<EChartOption> = {
           position: 'right',
           verticalAlign: 'middle',
           align: 'left',
-          color: '#F2F2F2'
+          color: '#000',
+          backgroundColor: '#F2F2F2'
           // }
         }
       },
