@@ -20,7 +20,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   chart: am4charts.Chart;
-  private lvl: Lvl;
+  lvl: Lvl;
   private url: string;
   private shape: Shape;
   loading: boolean;
