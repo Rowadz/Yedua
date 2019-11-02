@@ -21,9 +21,11 @@ $ cd Yedua
 $ git checkout code
 # there is an api and client
 $ cd Yedua-api
+$ npm i
 $ npm run start-dev
 $ cd ..
 $ cd Yedua-client
+$ npm i
 $ ng s
 ```
 
