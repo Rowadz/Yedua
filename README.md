@@ -1,7 +1,7 @@
 # Yedua
 A very simple web scrapper that visualizes the DOM.
 
-https://mohammedal-rowad.github.io/Yedua/
+https://rowadz.github.io/Yedua/
 
 * if you go to the `code` branch then these two files => `Yedua-api/src/composers/DomScraper.ts` & `Yedua-api/src/routes/scrap.ts`
 you will see the logic behind recursive scrapper (ps: press **t** then search for the file name).
